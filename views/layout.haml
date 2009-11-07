@@ -1,0 +1,18 @@
+%html{:xmlns=> "http://www.w3.org/1999/xhtml", 'xml:lang' => "en", :lang => "en"}
+  %head
+    %meta{'http-equiv' => "Content-Type", 'content' => "text/html; charset=utf-8"}
+    %title livewriter 0.0
+    =javascript_tag :jquery
+    =javascript_tag :jqueryui
+    =javascript_tag :sammy
+    =stylesheet_tag :jqui
+    =stylesheet_tag :style
+    =javascript_tag :livewriter
+  %body
+    #topleft
+    #topshadow
+    #topright
+    #leftshadow
+    #main
+      #content= yield
+    #rightshadow

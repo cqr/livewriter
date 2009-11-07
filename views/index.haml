@@ -1,0 +1,14 @@
+%h1 pro•cess•ive
+%h2.subtitle it's progression for prose
+%p This is processive, a simple little system that is part blog, part something else entirely.
+%div#closed{:title=>'Processive is closed. Sorry!'}
+  #errors{:style => 'margin:5px 10px'} &nbsp;
+  At this time, processive is in closed alpha.
+  If you are interested, please feel free to enter your email
+  address and we will let you know as soon as a slot opens up
+  for you to try it out.
+  %form{:action=>'/signup',:method=>'post'}
+    %label{:for=>'email'}Email:
+    %input#email{:name=>'email'}
+    %button{:type=>'submit'}Sign Up
+    

@@ -1,0 +1,84 @@
+html{
+    background-image:url('/images/houndstooth.png');
+    background-color:#950000;
+}
+html,body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+}
+body{
+    width:800px;
+    margin:0 auto;
+    overflow:hidden;
+}
+#main{
+    height:100%;
+    background-color:#fff;
+    background-image:url('/images/paper-texture.png');
+    font-family:Helvetica,Arial,sans-serif;
+    color:#000;
+    float:left;
+    width:752px;
+}
+#leftshadow,#rightshadow{
+    width:24px;
+    height:100%;
+    content:'asd';
+    display:block;
+}
+#leftshadow{
+    float:left;
+    background-image:url('/images/left-fade.png');
+}
+#rightshadow{
+    float:right;
+    background-image:url('/images/right-fade.png');
+}
+    h1{
+        font-size:1px;
+        background-image:url('/images/processive.png');
+        background-position:right bottom;
+        background-repeat:no-repeat;
+        
+        height:159px;
+        margin-top:-115px;
+    }
+    h2.subtitle{
+        margin:0;padding:0;
+        font-size:1.3em;
+        position:relative;
+        top:-13px;
+        margin-left:70px;
+    }
+    h1,h2.subtitle{
+        text-align:right;
+    }
+    p{font-size:1.4em;}
+    form{
+        margin:25px 0 -10px 0;
+    }
+#topshadow{
+    height:24px;
+    width:752px;
+    background-image:url('/images/top.png');
+    float:left;
+}
+#topleft{
+    height:24px;
+    width:24px;
+    background-image:url('/images/top-left.png');
+    float:left;
+}
+#topright{
+    height:24px;
+    width:24px;
+    background-image:url('/images/top-right.png');
+    float:right;
+}
+#content{
+    border: 1px solid #409;
+    height:100%;
+    padding:15px;
+    margin:5px;
+}
