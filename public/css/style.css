@@ -11,15 +11,19 @@ body{
     width:800px;
     margin:0 auto;
     overflow:hidden;
+    color:#fff;
+    font-family:Helvetica,Arial,sans-serif;
 }
 #main{
     height:100%;
     background-color:#fff;
     background-image:url('/images/paper-texture.png');
-    font-family:Helvetica,Arial,sans-serif;
     color:#000;
     float:left;
     width:752px;
+    position:relative;
+    top:-25px;
+    z-index:5;
 }
 #leftshadow,#rightshadow{
     width:24px;
@@ -38,21 +42,20 @@ body{
     h1{
         font-size:1px;
         background-image:url('/images/processive.png');
-        background-position:right bottom;
+        background-position:left bottom;
         background-repeat:no-repeat;
-        
+        margin-left:25px;
         height:159px;
-        margin-top:-115px;
+        margin-top:-105px;
+        margin-bottom:0;
+        padding:0;
     }
     h2.subtitle{
         margin:0;padding:0;
         font-size:1.3em;
         position:relative;
         top:-13px;
-        margin-left:70px;
-    }
-    h1,h2.subtitle{
-        text-align:right;
+        margin-left:50px;
     }
     p{font-size:1.4em;}
     form{
@@ -63,6 +66,7 @@ body{
     width:752px;
     background-image:url('/images/top.png');
     float:left;
+    z-index:3;
 }
 #topleft{
     height:24px;
@@ -81,4 +85,49 @@ body{
     height:100%;
     padding:15px;
     margin:5px;
+}
+#navbar{
+    list-style-type:none;
+    display:block;
+    position:relative;
+    top:-9px;
+    float:right;
+    height:0px;
+    margin: 0 35px 0 0;
+    padding:0;
+}
+#navbar li{
+    display:inline;
+    height:25px;
+    margin:0px;
+    padding:0;
+}
+#navbar li a{
+    background-color:rgba(255,255,255,0.3);
+    background-image:url('/images/top.png');
+    background-position:bottom;
+    background-repeat:repeat-x;
+    color:#000;
+    text-decoration:none;
+    padding: 4px 10px 17px 10px;
+    border-top:15px solid #CF0;
+    position:relative;
+    z-index:3;
+}
+#navbar li a:hover{
+    position:relative;
+    top:-4px;
+    background-color:rgba(255,255,255,0.5);
+}
+br.clear{
+    clear:both;
+}
+
+#navbar li a.active{
+    position:relative;
+    top:0px;
+    z-index:200 !important;
+    background-color:rgba(255,255,255,0.7);
+    background-image:none;
+    padding-bottom:45px;
 }
