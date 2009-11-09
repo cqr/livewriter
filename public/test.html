@@ -1,0 +1,16 @@
+<textarea>asdf
+asdf
+asdf
+asdf
+asdf
+asdf
+asdf
+</textarea>
+<script type='text/javascript' src='/js/jquery.js'></script>
+<script type='text/javascript'>
+	(function($){$(function(){
+		$('textarea').click(function(){
+			alert('position: '+this.selectionStart);
+		});
+	}))(jQuery);
+</script>
