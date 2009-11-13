@@ -84,6 +84,16 @@ body{
     height:100%;
     padding:15px;
     margin:5px;
+    position:relative;
+}
+#loading{
+    width:16px;
+    height:16px;
+    background-image:url('/images/loading.gif');
+    position:absolute;
+    top:0;right:0;
+    z-index:20;
+    display:none;
 }
 #navbar{
     list-style-type:none;
@@ -92,7 +102,7 @@ body{
     top:-9px;
     float:right;
     height:0px;
-    margin: 0 35px 0 0;
+    margin: 0 50px 0 0;
     padding:0;
 }
 #navbar li{
@@ -102,6 +112,8 @@ body{
     padding:0;
 }
 #navbar li a{
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: top 0.2s ease-in-out, background-color 0.2s ease-in-out;
     background-color:rgba(255,255,255,0.3);
     background-image:url('/images/top.png');
     background-position:bottom;
@@ -109,13 +121,13 @@ body{
     color:#000;
     text-decoration:none;
     padding: 4px 10px 17px 10px;
-    border-top:15px solid #CF0;
+    border-top:15px solid rgba(200,0,0,0.8);
     position:relative;
     z-index:4;
 }
 #navbar li a:hover{
     position:relative;
-    top:-4px;
+    top:-6px;
     background-color:rgba(255,255,255,0.5);
 }
 br.clear{
@@ -125,7 +137,7 @@ br.clear{
 #navbar li a.active{
     position:relative;
     top:0px;
-    z-index:200 !important;
+    z-index:10;
     background-color:rgba(255,255,255,0.7);
     background-image:none;
     padding-bottom:45px;

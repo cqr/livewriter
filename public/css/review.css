@@ -1,0 +1,34 @@
+body, input{
+    font: normal 14px Anonymous Pro, Monaco, Courier, monospace;
+}
+html,body{
+  height:99%;
+//  overflow:hidden;
+  cursor:none;
+}
+#textcontainer{
+    width:643px;
+    margin:0 auto;
+    height:95%;
+//    border:1px solid #000;
+}
+input{
+    width:100%;
+    border:none;
+    outline:none;
+    margin:0; padding:0;
+    cursor:none;
+}
+.line{
+  padding-left:1px;
+  height:14px;
+}
+#stats{
+  border:1px solid #000;
+  width:200px;
+  height:95%;
+  overflow:hidden;
+  position:absolute;
+  top:-1px;
+  right:-1px;
+}
