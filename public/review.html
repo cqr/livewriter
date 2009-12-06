@@ -7,15 +7,14 @@
 	<title>testing the textarea</title>
 	<script src="/js/jquery.js" type="text/javascript" charset="utf-8"></script>
 	<link rel="stylesheet" href="/css/review.css" type="text/css" media="screen" title="review" charset="utf-8" />
-	<script src="/js/review.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+	 jQuery(function($){
+	   var alph = {}; $('#textInput').keypress(function(k){ alph[k.keyCode] = $(this).text(); $(this).text('');window.console.log(alph); });
+	 });
+	</script>
 </head>
 
 <body>
-  <div id='stats'></div>
-  <div id='textcontainer'>
-    <div id='pre_text'></div>
-    <div id='text'><input type='text' id='inputbox'/></div>
-    <div id='post_text'></div>
-  </div>
+  <textarea id='textInput'></textarea>
 </body>
 </html>

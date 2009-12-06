@@ -120,3 +120,33 @@
     $('#stats').prepend('<div>'+msg+'</div>');
   }
 })(jQuery);
+
+;(function($) {
+//nothing
+$.fn.awesome = function(options) {
+  var opts = $.extend({}, $.fn.awesome.defaults, options);
+
+  return this.each(function() {
+    var $this = $(this);
+
+    // Support for the Metadata Plugin.
+    var o = $.meta ? $.extend({}, opts, $this.data()) : opts;
+  
+
+  });
+
+  // private function for debugging
+  function debug($obj) {
+    if (window.console && window.console.log) {
+      window.console.log($obj);
+    }
+  }
+};
+
+// default options
+$.fn.awesome.defaults = {
+  default: 'awesome'
+};
+
+})(jQuery);
+
