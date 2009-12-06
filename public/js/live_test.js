@@ -2,6 +2,8 @@ var LiveWriter = new (function ($) {
 	// all code which goes here is inside of an anonymous function and
 	// therefore is not accessible outside of this function unless a specific
 	// hook is created by assigning a property to `this`
+	
+	var maxline = 0;
     
 	// our caret object. Totally sweet.
     caret = {
@@ -50,21 +52,49 @@ var LiveWriter = new (function ($) {
                            },rate*2)
                        }
     };
+    
+    
 	  
 	// our Line class
-	function Line() {
-
+	function Line(number) {
+        this.number = number;
+        this.dom = document.createElement('div');
+        this.dom.className = 'line';
+        //this.dom.id = number;
+	}
+	
+	Line.prototype = {
+	    
+	    
+	    
+	    'length':   function () {
+	        return this.html.length;
+	    },
+	    'add_character_at': function (str, pos) {
+	        this.html = this.html.substring(0,pos) + str +
+	            this.html.substring(pos);
+	    },
+	    'remove_character_at': function (pos) {
+	        this.html = this.html.substring(0, pos - 1) +
+	            this.html.substring(pos);
+	    }
 	}
 
     $(function(){
         // code in this box will be executed after the dom has loaded and
         //and is ready to be manipulated.
-		  
+		
+		if(window.console){
+		    window.console.log('livewriter starting up');
+		}
+		
 		caret.dom = $('#caret');
+		maxline = $('.line:last').attr('id');
+		window.console.log(maxline);
 		caret.blink();
 		  
-		window.console.log('Livewriter coninuing....');
-        $('*').keyTyped(function(key){
+		
+        $(window).keyTyped(function(key){
         
             // If the message is a browser command, let it through.
 		    if (key.is_command) {
@@ -97,10 +127,10 @@ var LiveWriter = new (function ($) {
                 caret.move_right(key.char_size);
                 $('#textarea').html(pre_caret + post_caret);
 		    } else {
-                window.console.log(key);
+                window.console.dir( key);
             }
-        
-  		    key = null;
+            
+            key = null;
 			
 			//override default browser behavior.
 			return false;
