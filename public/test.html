@@ -11,7 +11,7 @@
   </style>
   <script type='text/javascript'>
    
-  	var LiveWriter = new (function($){
+var LiveWriter = new (function($){
   	  // all code which goes here is inside of an anonymous function and therefore is not accessible outside of this function
   	  // unless a specific hook is created by assigning a property to `this`
   	  
@@ -24,15 +24,46 @@
               alert("Couldn't open the database. You probably need Safari.");*/
       
   	  // our caret object
-  	  var caret = {
-        'position'   : 0,
-        'move_left'  : function(w){if(w===undefined){w=1}this.position-=w; this.refresh();},
-        'move_right' : function(w){if(w===undefined){w=1}this.position+=w; this.refresh();},
-        'refresh'    : function(){this.dom.css('left',(8*this.position)+'px');},
-        'blink'      : function(r){if(r===undefined){r=400}setInterval(function(){caret.dom.css('border-color','#fff');setTimeout(function(){caret.dom.css('border-color','#000');},r)},r*2)}
+      var caret = {
+          'position':    0,
+          
+          'move_left':   function (width) {
+                            if (width === undefined) {
+                                width = 1;
+                            }
+                            this.position -= width;
+                            this.refresh();
+                         },
+                         
+          'move_right':  function (width) {
+                            if (width === undefined) {
+                                width = 1;
+                            }
+                            this.position += width;
+                            this.refresh();
+                         },
+                         
+          'refresh':     function () {
+                            this.dom.css('left',(8 * this.position) + 'px');
+                         },
+                         
+          'blink':       function (rate) {
+                            if (rate === undefined) {
+                                 rate = 400;
+                             }
+                             setInterval(function () {
+                                 caret.dom.css('border-color','#fff');
+                                 setTimeout(function () {
+                                     caret.dom.css('border-color','#000');
+                                 },rate)
+                             },rate*2)
+                         }
       };
   	  
   	  // our Line class
+  	  function Line() {
+  	    
+  	  }
 
   		$(function(){
   		  window.console.log('Document loaded. Livewriter Initializing.');
