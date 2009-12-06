@@ -1,18 +1,151 @@
-<textarea>asdf
-asdf
-asdf
-asdf
-asdf
-asdf
-asdf
-</textarea>
-<script type='text/javascript' src='/js/jquery.js'></script>
-<script type='text/javascript'>
-	(function($){
-		$(function(){
-			$('textarea').click(function(){
-				alert('position: '+this.selectionStart);
-			});
-		});
-	})(jQuery);
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+  <script type='text/javascript' src='js/jquery.js'></script>
+  <style type='text/css'>
+    html{background-color:#000;height:100%;}
+    body{background-color:#181818;height:100%;padding:0 15px;color:#fff;width:640px;margin:0 auto;padding-top:10px;position:relative}
+    #caret{display:block;width:1px;float:left;left:2px;height:15px;border-left:1px solid #000;position:absolute;margin-left:15px}
+    #textarea{white-space:pre;letter-spacing:0px;font:14px Anonymous Pro, Courier, monospace;}
+  </style>
+  <script type='text/javascript'>
+   
+  	var LiveWriter = new (function($){
+  	  
+  	  
+  	  
+  	  // all code which goes here is inside of an anonymous function and therefore is not accessible outside of this function
+  	  // unless a specific hook is created by assigning a property to `this`
+  	  
+  	  // attempt to connect to the database
+  	  /*if (window.openDatabase) {
+              var db = openDatabase("LiveWriter", "0.2", "A Quick Little Hack", 20000000);
+              if (!db)
+                  alert("Failed to open the database on disk.  This is probably because the version was bad or there is not enough space left in this domain's quota");
+          } else
+              alert("Couldn't open the database. You probably need Safari.");*/
+              
+              
+        // these are our character mappings...
+        var alph = "0|1|2|3|4|5|6|7|[backspace]|    |10|11|12|[return]|14|15|[shift]|17|[option]|19|[shift-lock]|21|22|23|24|25|26|27|28|29|30|31| |33|34|35|36|[left]|[up]|[right]|[down]|41|42|43|44|45|46|47|0|1|2|3|4|5|6|7|8|9|58|;|60|=|62|63|64|a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|91|92|93|94|95|96|97|98|99|100|101|102|103|104|105|106|107|108|-|110|111|112|113|114|115|116|117|118|119|120|121|122|123|124|125|126|127|128|129|130|131|132|133|134|135|136|137|138|139|140|141|142|143|144|145|146|147|148|149|150|151|152|153|154|155|156|157|158|159|160|161|162|163|164|165|166|167|168|169|170|171|172|173|174|175|176|177|178|179|180|181|182|183|184|185|;|=|,|-|.|/|`|193|194|195|196|197|198|199|200|201|202|203|204|205|206|207|208|209|210|211|212|213|214|215|216|217|218|[|\\|]|'|223|224|225|226|227|228|229|230|231|232|233|234|235|236|237|238|239|240|241|242|243|244|245|246|247|248|249|250".split('|');
+        var cap_alph = '0,1,2,3,4,5,6,7,[shift-backspace],[shift-tab],10,11,12,[shift-return],14,15,[shift],17,[option],19,[shift-lock],21,22,23,24,25,26,27,28,29,30,31, ,33,34,35,36,[left],[up],[right],[down],41,42,43,44,45,46,47,),!,@,#,$,%,^,&,*,(,58,:,60,+,62,63,64,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,_,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,:,+,<,_,>,?,~,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,{,|,},",223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250'.split(',');
+  	  
+  	  // our caret object
+  	  var caret = {
+        'position'   : 0,
+        'move_left'  : function(w){if(w===undefined){w=1}this.position-=w; this.refresh();},
+        'move_right' : function(w){if(w===undefined){w=1}this.position+=w; this.refresh();},
+        'refresh'    : function(){this.dom.css('left',(8*this.position)+'px');},
+        'blink'      : function(r){if(r===undefined){r=400}setInterval(function(){caret.dom.css('border-color','#fff');setTimeout(function(){caret.dom.css('border-color','#000');},r)},r*2)}
+      };
+
+  	  // our key class
+  	  // accepts an event
+  	  function Key(e){
+  	    var k = e.keyCode;
+  	    this.key_code = k;
+  	    this.is_visible = ((k>64&&k<91)||(k>47&&k<62)||k==109||(k>185&&k<193)||(k>218&&k<223));
+  	    this.is_whitespace = (k==9||k==10||k==32);
+  	    this.is_return = (k==13);
+  	    this.is_command = e.metaKey;
+  	    this.is_shift = e.shiftKey;
+  	    this.is_arrow =  k>36&&k<41;
+  	    this.is_backspace = k==8;
+  	    this.pressed = this.is_shift ? cap_alph[this.key_code]:alph[this.key_code]
+  	    if(this.is_visible||this.is_whitespace){
+  	      this.character = this.pressed
+  	    } else this.character ='';
+  	    this.char_size = this.character.length;
+  	  }
+  	  
+  	  // our Line class
+
+  		$(function(){
+  		  window.console.log('Document loaded. Livewriter Initializing.');
+  		  // code in this box will be executed after the dom has finished loading
+  		  //and is ready to be manipulated.
+  		  caret.dom = $('#caret');
+  		  caret.blink();
+  		  
+  		  window.console.log('Livewriter coninuing....');
+  			$('*').keydown(function(e){
+          var key = new Key(e);
+          
+  			  // If the message is a browser command, let it through.
+  			  if(key.is_command){return true}
+
+  			  //arrow keys
+  			  else if(key.is_arrow){
+  			    switch(key.pressed){
+  			      case '[left]':
+  			        caret.move_left();
+  			        break;
+  			      case '[right]':
+  			        caret.move_right();
+  			        break;
+  			      default:
+  			        window.console.log('Up and Down not yet implemented.');
+  			    }
+  			  }
+  			  
+  			  //backspace
+  			  else if (key.is_backspace){
+  			    var text = $('#textarea').html();
+  			    var pre_caret = text.substring(0,caret.position-1);
+  			    var post_caret = text.substring(caret.position);
+  			    $('#textarea').html(pre_caret+post_caret);
+  			    caret.move_left();
+  			  }
+  			  
+  			  else if (key.is_return){
+  			    
+  			  }
+
+  			  //all visible and whitespace characters
+  			  else if(key.is_visible || key.is_whitespace){
+  			    caret.move_right(key.char_size);
+  				  $('#textarea').append(key.character);
+  				}
+
+  				//for debugging purposes
+  				else {
+  				    window.console.log(e);
+  				    window.console.log(key);
+  				}
+  				
+  				//let go of that key.
+  				key = null;
+  				
+  				//override default browser behavior.
+  				return false;
+  			});
+  			
+  			// Prevent Autorepeat from breaking Firefox.
+  			$('*').keypress(function(e){
+  			  var key = new Key(e);
+  			  if (key.is_command) {
+  			    return true;
+  			  }
+  			  return false;
+  			});
+  			
+  			$('window').blur(function(){
+  			  caret.dom.hide();
+  			})
+  		});
+  		
+  		
+  		// Set up our external accessors
+  		this.caret = caret;
+  		
+  		// Hooks
+  		this.ready = function(){};
+  	})(jQuery);
+  </script>
+  
+</head>
+<body>
+  <div id='caret'></div>
+  <div id='textarea'></div>
+</body>
+</html>
