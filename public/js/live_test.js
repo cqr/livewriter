@@ -15,6 +15,9 @@ var LiveWriter = new (function ($) {
                               width = 1;
                           }
                           this.position -= width;
+                          if (this.position < 0) {
+                              this.position = 0;
+                          }
                           this.refresh();
                        },
                        
@@ -27,7 +30,12 @@ var LiveWriter = new (function ($) {
                        },
                        
         'refresh':     function () {
-                          this.dom.css('left',(8 * this.position) + 'px');
+                          while (this.dom.html().length < this.position) {
+                              this.dom.prepend('_');
+                          }
+                          while (this.dom.html().length > this.position) {
+                              this.dom.html(this.dom.html().substr(1));
+                          }
                        },
                        
         'blink':       function (rate) {
@@ -35,9 +43,9 @@ var LiveWriter = new (function ($) {
                                rate = 400;
                            }
                            setInterval(function () {
-                               caret.dom.css('border-color','#fff');
+                               caret.dom.css('border-width',0);
                                setTimeout(function () {
-                                   caret.dom.css('border-color','#000');
+                                   caret.dom.css('border-width',1);
                                },rate)
                            },rate*2)
                        }
